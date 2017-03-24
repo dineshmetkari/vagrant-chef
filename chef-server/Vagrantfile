@@ -1,0 +1,27 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+Vagrant.configure("2") do |config|
+  if Vagrant::Util::Platform::windows? then
+	config.vm.box = "maxx/ubuntu16"
+  else
+	config.vm.box = "bento/ubuntu-14.04"
+  end
+
+  config.env.enable # Enable vagrant-env(.env)
+  config.vm.hostname = ENV["VM_HOSTNAME"] 
+  config.vm.network "private_network", ip: ENV["VM_PRIVATE_IP_ADDRESS"]
+
+  config.vm.provision 'shell', path: "./install.sh"
+  config.vm.provision 'shell', inline: 'hostname #{config.vm.hostname}'
+
+  config.vm.provider "hyperv" do |hv|
+     hv.memory = ENV["VM_MEMORY"]
+     hv.cpus = ENV["VM_CPU_COUNT"]
+  end
+
+  config.vm.provider "virtualbox" do |vb|
+   vb.memory = ENV["VM_MEMORY"]
+   vb.cpus = ENV["VM_CPU_COUNT"]
+  end
+end
