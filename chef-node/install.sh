@@ -4,7 +4,10 @@ echo "Preparing node..."
 
 # ensure the time is up to date
   apt-get update
-  apt-get -y install ntp
+  apt-get -y upgrade
+  apt-get -y dist-upgrade
+  apt-get -y autoremove
+  apt-get -y install ntp ntpdate
   service ntp stop
   ntpdate -s time.nist.gov
   service ntp start
