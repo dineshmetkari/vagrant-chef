@@ -8,6 +8,7 @@ Vagrant.configure(2) do |config|
   	config.vm.box = "bento/ubuntu-14.04"
   end
 
+  config.env.enable
   config.vm.hostname = ENV["VM_HOSTNAME"]
   config.vm.network 'private_network', ip: '10.1.1.34'
   config.vm.provision :shell, path: './install.sh'
